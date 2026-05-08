@@ -1,6 +1,7 @@
 import React from 'react';
 import { Container, Row, Col, Button } from 'react-bootstrap';
 import Header from '../components/Header';
+import { Link } from 'react-router-dom';
 
 function Home() {
   const cats = [
@@ -29,10 +30,10 @@ function Home() {
                   Objevte unikátní prostor v srdci města, kde se čas na chvíli zastaví a káva chutná o kapku lépe.
                 </p>
                 <div className="d-flex gap-3 flex-wrap">
-                  <Button className="btn-custom py-3 px-5 fs-5" href="/catalog">
+                  <Button className="btn-custom py-3 px-5 fs-5" as={Link} to="/catalog">
                     VSTOUPIT
                   </Button>
-                  <Button variant="outline-light" className="py-3 px-5 fs-5 rounded-3 border-2" href="/contacts">
+                  <Button variant="outline-light" as={Link} to="/contacts" className="py-3 px-5 fs-5 rounded-3 border-2">
                     KDE NÁS NAJÍT?
                   </Button>
                 </div>

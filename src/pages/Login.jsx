@@ -12,9 +12,25 @@ const Login = () => {
   const { setUser } = useCart();
   const navigate = useNavigate();
 
+  const validateEmail = (email) => {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  };
+
   const handleAction = (e) => {
     e.preventDefault();
     setError('');
+
+    // Validace e-mailu
+    if (!validateEmail(email)) {
+      setError('Zadejte platnou e-mailovou adresu (např. kote@email.cz).');
+      return;
+    }
+
+    // Validace délky hesla
+    if (password.length < 6) {
+      setError('Heslo musí mít alespoň 6 znaků.');
+      return;
+    }
 
     const users = JSON.parse(localStorage.getItem('mnau_cafe_users_db')) || [];
 
@@ -75,7 +91,7 @@ const Login = () => {
                 />
               </div>
 
-              <div className="mb-4">
+              <div className="mb-1">
                 <label htmlFor="login-password" className="form-label fw-bold opacity-75">
                   Heslo
                 </label>
@@ -84,13 +100,16 @@ const Login = () => {
                   type="password"
                   className="form-control py-3"
                   required
-                  placeholder="Vaše heslo"
+                  placeholder="Minimálně 6 znaků"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   style={{ borderRadius: '15px', backgroundColor: '#f4f2e9', border: 'none' }}
                   autoComplete={isRegistering ? 'new-password' : 'current-password'}
                 />
               </div>
+
+              {/* Podpověď pod polem hesla */}
+              <p className="small opacity-50 mb-4 ps-1">Heslo musí mít alespoň 6 znaků.</p>
 
               <Button className="w-100 btn-custom py-3 mb-3" type="submit">
                 {isRegistering ? 'Vytvořit účet' : 'Přihlásit se'}
