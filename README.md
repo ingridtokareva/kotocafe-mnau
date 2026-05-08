@@ -7,6 +7,7 @@ Webová aplikace pro fiktivní kočičí kavárnu v centru města. Hosté si moh
 - Frontend: React + React Router
 - Stylování: Bootstrap 5 + vlastní CSS
 - Správa stavu: Context API + localStorage
+- Hosting: Vercel: [Mňau Café](https://kotocafe-mnau.vercel.app/)
 
 ## Funkce
 - 🐾 Představení kočičích rezidentů kavárny
