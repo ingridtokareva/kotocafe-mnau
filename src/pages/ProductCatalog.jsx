@@ -17,20 +17,51 @@ function ProductCatalog() {
     { id: 9, name: 'Kocour Pán', description: 'Chodí jako by vlastnil celé místo.', price: 0, category: 'kočky', img: '/image/kocour_cernebile.jpg' },
   ]);
 
-  const [filter, setFilter] = useState('vše');
-  const filtered = filter === 'vše' ? products : products.filter(p => p.category === filter);
+   const [filter, setFilter] = useState('vše');
+  const [toast, setToast] = useState(null); // { name, id }
   const categories = ['vše', 'kočky', 'nápoje', 'jídlo'];
-
+  const filtered = filter === 'vše' ? products : products.filter(p => p.category === filter);
+ 
+  const handleAddToCart = (product) => {
+    addToCart(product);
+    setToast(product.name);
+    setTimeout(() => setToast(null), 2500);
+  };
+ 
   return (
     <div style={{ backgroundColor: '#FFF8F0', minHeight: '100vh' }}>
       <Header />
-
+ 
+      {/* TOAST NOTIFIKACE */}
+      {toast && (
+        <div
+          role="status"
+          aria-live="polite"
+          style={{
+            position: 'fixed',
+            bottom: '30px',
+            right: '30px',
+            zIndex: 9999,
+            backgroundColor: '#46583d',
+            color: 'white',
+            padding: '14px 24px',
+            borderRadius: '16px',
+            boxShadow: '0 8px 24px rgba(0,0,0,0.15)',
+            fontWeight: 600,
+            fontSize: '15px',
+            animation: 'fadeInUp 0.3s ease',
+          }}
+        >
+          🛒 <strong>{toast}</strong> byl přidán do košíku!
+        </div>
+      )}
+ 
       <main>
         <Container className="py-5">
           <div className="text-center mb-5">
             <h1 className="display-4 fw-bold mb-3" style={{ color: '#5D4037' }}>Naše nabídka</h1>
             <p className="text-muted">Vyberte si dobrotu nebo si objednejte pamlsek pro naše kočky.</p>
-
+ 
             <nav aria-label="Filtr kategorií">
               <ButtonGroup className="shadow-sm rounded-pill overflow-hidden mt-3">
                 {categories.map(cat => (
@@ -48,7 +79,7 @@ function ProductCatalog() {
               </ButtonGroup>
             </nav>
           </div>
-
+ 
           <Row className="g-4" as="ul" style={{ listStyle: 'none', padding: 0 }}>
             {filtered.map(p => (
               <Col key={p.id} md={4} as="li">
@@ -79,7 +110,7 @@ function ProductCatalog() {
                           {p.price > 0 ? `${p.price} Kč` : 'Mazlení zdarma'}
                         </span>
                         <Button
-                          onClick={() => addToCart(p)}
+                          onClick={() => handleAddToCart(p)}
                           style={{ backgroundColor: '#5D4037', border: 'none' }}
                           className="rounded-pill px-4"
                           aria-label={`Přidat ${p.name} do košíku`}
@@ -95,6 +126,13 @@ function ProductCatalog() {
           </Row>
         </Container>
       </main>
+ 
+      <style>{`
+        @keyframes fadeInUp {
+          from { opacity: 0; transform: translateY(20px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+      `}</style>
     </div>
   );
 }

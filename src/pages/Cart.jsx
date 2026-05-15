@@ -1,5 +1,6 @@
 import React from 'react';
 import { Container, Table, Button, Alert } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 import { useCart } from '../components/CartContext';
 import Header from '../components/Header';
 
@@ -56,19 +57,18 @@ const Cart = () => {
                 {!user ? (
                   <div className="d-flex flex-column align-items-end gap-3">
                     <Alert variant="warning" className="rounded-pill border-0 px-4 mb-0" role="status">
-                      Pro dokončení objednávky se musíte nejdříve přihlásit!
+                      Pro dokončení objednávky se musíte nejdříve <Link to="/login">přihlásit</Link>!
                     </Alert>
                     <Button className="btn-custom py-3 px-5 opacity-50" disabled aria-disabled="true">
                       ZAPLATIT OBJEDNÁVKU
                     </Button>
                   </div>
                 ) : (
-                  <Button
-                    className="btn-custom py-3 px-5"
-                    onClick={() => alert('Děkujeme! Vaše objednávka byla přijata.')}
-                  >
-                    DOKONČIT PLATBU
-                  </Button>
+                  <Link to="/payment">
+                    <Button className="btn-custom py-3 px-5">
+                      ZAPLATIT OBJEDNÁVKU
+                    </Button>
+                  </Link>
                 )}
               </div>
             </div>
